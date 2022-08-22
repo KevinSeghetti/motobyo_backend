@@ -12,26 +12,9 @@ const Server = () =>
 
     app.use(express.json())
 
-
     app.post('/employees', async (req, res) => {
-
-      anotherOne =
-      {
-          "firstName" : "Another",
-          "middleInitial" : "T",
-          "lastName" : "One",
-          "dateOfBirth" : "1967/07/24",
-          "dateOfEmployment" : "2022/07/01",
-          "status" : true
-      }
-      console.log("post to employees, aboter = ",anotherOne)
-
-      await Employee.create(anotherOne)
-
-
       console.log("post to employees, body = ",req.body)
       await Employee.create(req.body)
-
 
       res.send("success")
     })
