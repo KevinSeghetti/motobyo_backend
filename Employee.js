@@ -1,7 +1,11 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./database');
 
-class Employee extends Model {};
+"use strict"
+
+import Sequelize from 'sequelize'
+const { Model, DataTypes } = Sequelize
+import sequelize from './database.js'
+
+class Employee extends Model {}
 
 // Employee fields:
 // ID - Unique identifier for an employee
@@ -40,4 +44,5 @@ Employee.init(
   timestamps: false
 })
 
-module.exports = Employee;
+export default Employee
+

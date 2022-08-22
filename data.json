@@ -1,0 +1,18 @@
+[
+    {
+        "firstName" : "Kevin",
+        "middleInitial" : "T",
+        "lastName" : "Seghetti",
+        "dateOfBirth" : "1967/07/24",
+        "dateOfEmployment" : "2022/07/01",
+        "status" : true
+    },
+    {
+        "firstName" : "Another",
+        "middleInitial" : "T",
+        "lastName" : "One",
+        "dateOfBirth" : "1967/07/24",
+        "dateOfEmployment" : "2022/07/01",
+        "status" : true
+    }
+]
