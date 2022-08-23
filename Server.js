@@ -31,11 +31,21 @@ const Server = () =>
     })
 
     app.put('/employees/:id', async (req, res) => {
+        console.log("put to employees, body = ",req.body)
       const id = req.params.id
       const employee = await Employee.findOne({where: {id: id}})
-      employee.employeename = req.body.employeename
-      await employee.save()
-      res.send('updated')
+      if (employee)
+      {
+        console.log("employee",employee)
+        // kts smell: this is dangerous, need to add a filter to only allow the writable employee fields
+        Object.assign(employee,req.body)
+        await employee.save()
+        res.send('updated')
+      }
+      else
+      {
+        res.send('employee not found')
+      }
     })
 
     app.delete('/employees/:id', async (req, res) => {
