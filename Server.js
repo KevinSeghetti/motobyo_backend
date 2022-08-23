@@ -5,6 +5,10 @@ import express from "express"
 import Employee from './Employee.js'
 import User from './User.js'
 
+let rootUrl = "/api/"
+let loginUrl = rootUrl+'login'
+let employeesUrl = rootUrl+'employees'
+
 //import BodyParser from  'body-parser'
 
 const Server = () =>
@@ -14,7 +18,7 @@ const Server = () =>
     app.use(express.json())
 
     // not actually a user authentication system
-    app.post('/login', async (req, res) => {
+    app.post(loginUrl, async (req, res) => {
       console.log("login, body = ",req.body)
       const userName = req.body.userName
 
@@ -37,25 +41,25 @@ const Server = () =>
       res.status(401).send(new Error('user not found or password incorrect'));
     })
 
-    app.post('/employees', async (req, res) => {
+    app.post(employeesUrl, async (req, res) => {
       console.log("post to employees, body = ",req.body)
       await Employee.create(req.body)
 
       res.send("success")
     })
 
-    app.get('/employees', async (req, res) => {
+    app.get(employeesUrl, async (req, res) => {
       const employees = await Employee.findAll()
       res.send(employees)
     })
 
-    app.get('/employees/:id', async (req, res) => {
+    app.get(employeesUrl+'/:id', async (req, res) => {
       const id = req.params.id
       const employee = await Employee.findOne({where: {id: id}})
       res.send(employee)
     })
 
-    app.put('/employees/:id', async (req, res) => {
+    app.put(employeesUrl+'/:id', async (req, res) => {
         console.log("put to employees, body = ",req.body)
       const id = req.params.id
       const employee = await Employee.findOne({where: {id: id}})
