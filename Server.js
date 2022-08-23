@@ -36,7 +36,6 @@ const Server = () =>
       const employee = await Employee.findOne({where: {id: id}})
       if (employee)
       {
-        console.log("employee",employee)
         // kts smell: this is dangerous, need to add a filter to only allow the writable employee fields
         Object.assign(employee,req.body)
         await employee.save()
@@ -50,8 +49,20 @@ const Server = () =>
 
     app.delete('/employees/:id', async (req, res) => {
       const id = req.params.id
-      await Employee.destroy({where: {id: id}})
-      res.send('removed')
+      const employee = await Employee.findOne({where: {id: id}})
+      if (employee)
+      {
+        employee.status = false
+        await employee.save()
+        res.send('removed')
+      }
+      else
+      {
+        res.send('employee not found')
+      }
+
+      // we don't actually delete employees, just flag them as inactive
+      //await Employee.destroy({where: {id: id}})
     })
 
     app.listen(3010, "localhost",() => {

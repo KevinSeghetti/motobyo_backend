@@ -14,7 +14,7 @@ class Employee extends Model {}
 // LastName - Employee last name
 // DateOfBirth - Employee birthday and year
 // DateOfEmployment - Employee start date
-// Status - ACTIVE or INACTIVE
+// Status - true = ACTIVE, false = INACTIVE
 
 Employee.init(
 {
@@ -36,6 +36,7 @@ Employee.init(
   },
   status : {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
   }
 },
 {
