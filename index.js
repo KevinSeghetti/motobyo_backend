@@ -12,18 +12,33 @@ import { hideBin } from 'yargs/helpers'
 
 import sequelize from './database.js'
 import Employee from './Employee.js'
+import User from './User.js'
 import Server from './Server.js'
 
 //===============================================================================
 //async function to seed the database with some data
 
-async function SeedDatabase(employeeData)
+async function SeedEmployees(employeeData)
 {
-    //console.log("SeedDatabase:",employeeData)
+    //console.log("SeedEmployees:",employeeData)
     let unresolved = employeeData.map( (entry) =>
     {
-        //console.log("SeedDatabase::setting",entry)
+        //console.log("SeedEmployees::setting",entry)
         return Employee.create(entry)
+    }
+    )
+    Promise.all(unresolved)
+}
+
+//-------------------------------------------------------------------------------
+
+async function SeedUsers(userData)
+{
+    console.log("SeedUsers:",userData)
+    let unresolved = userData.map( (entry) =>
+    {
+        //console.log("SeedUsers::setting",entry)
+        return User.create(entry)
     }
     )
     Promise.all(unresolved)
@@ -54,8 +69,11 @@ if (argv.initialize)
     }
 
     let rawdata = fs.readFileSync(argv.initialize)
-    let employeeData = JSON.parse(rawdata)
-    await SeedDatabase(employeeData)
+    let data = JSON.parse(rawdata)
+    let userData = data.users
+    await SeedUsers(userData)
+    let employeeData = data.employees
+    await SeedEmployees(employeeData)
 }
 
 // finally, run the web server

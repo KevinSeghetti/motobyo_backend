@@ -3,6 +3,7 @@
 
 import express from "express"
 import Employee from './Employee.js'
+import User from './User.js'
 
 //import BodyParser from  'body-parser'
 
@@ -11,6 +12,30 @@ const Server = () =>
     const app = express()
 
     app.use(express.json())
+
+    // not actually a user authentication system
+    app.post('/login', async (req, res) => {
+      console.log("login, body = ",req.body)
+      const userName = req.body.userName
+
+
+      const users = await Employee.findAll()
+      console.log("users",users)
+
+
+      const user = await User.findOne({where: {name: userName}})
+      if (user)
+      {
+        console.log("login: found user",user)
+        if (user.password === req.params.password)
+        {
+          res.send("success")
+          return
+        }
+      }
+
+      res.status(401).send(new Error('user not found or password incorrect'));
+    })
 
     app.post('/employees', async (req, res) => {
       console.log("post to employees, body = ",req.body)
