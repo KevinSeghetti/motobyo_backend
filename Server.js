@@ -100,7 +100,7 @@ const AddEmployeeRoutes = (app) =>
   // flag a employee as inactive.
   // this is currently one way, will likely want to have the ability
   // to reactive an inactive account
-  app.delete('/employees/:id', async (req, res) => {
+  app.delete(employeesUrl+'/:id', async (req, res) => {
     console.log("DELETE:employees: id = ",req.params.id)
     const id = req.params.id
     const employee = await Employee.findOne({where: {id: id}})
